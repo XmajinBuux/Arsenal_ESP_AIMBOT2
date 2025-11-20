@@ -1,58 +1,601 @@
-–========================================================– – M A J I N H
-U B V2 – Fully Expanded Admin Framework (Free Admin Game) – YOU
-requested: ALL features added, original kept intact
-–========================================================–
+--========================================================--
+-- M A J I N H U B
+-- Rayfield UI Powered Cheat Hub
+-- Theme: MAJIN RED
+--========================================================--
 
-– RAYFIELD LOAD local Rayfield =
-loadstring(game:HttpGet(‘https://sirius.menu/rayfield’))()
+-- RAYFIELD LOAD
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-local Window = Rayfield:CreateWindow({ Name = “MAJINHUB”, LoadingTitle =
-“MAJINHUB”, LoadingSubtitle = “Made by ChatGPT”, ConfigurationSaving = {
-Enabled = false }, Discord = { Enabled = false }, KeySystem = false })
+local Window = Rayfield:CreateWindow({
+Name = "MAJINHUB",
+LoadingTitle = "MAJINHUB",
+LoadingSubtitle = "Made by MAJINBUU",
+ConfigurationSaving = {
+Enabled = false
+},
+Discord = {
+Enabled = false
+},
+KeySystem = false
+})
 
-–========================================================–
-–======================= VARIABLES ========================–
-–========================================================–
+--========================================================--
+--======================= VARIABLES ========================--
+--========================================================--
 
-local Players = game:GetService(“Players”) local Teams =
-game:GetService(“Teams”) local UserInputService =
-game:GetService(“UserInputService”) local RunService =
-game:GetService(“RunService”) local Workspace =
-game:GetService(“Workspace”)
+local Players = game:GetService("Players")
+local Teams = game:GetService("Teams")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
 
-local player = Players.LocalPlayer local camera =
-workspace.CurrentCamera
+local player = Players.LocalPlayer
+local camera = workspace.CurrentCamera
 
-– FEATURE TOGGLES local AIM_ENABLED = false local SILENT_AIM = false
-local TRIGGERBOT = false local ESP_ENABLED = true local FOV_ENABLED =
-false
+-- FEATURE TOGGLES
+local AIM_ENABLED = false
+local SILENT_AIM = false
+local TRIGGERBOT = false
+local ESP_ENABLED = true
+local FOV_ENABLED = false
+local NO_SPREAD = false
+local NO_RECOIL = false
+local INFINITE_AMMO = false
+local RAPID_FIRE = false
+local HITBOX = false
+local AUTO_HEAL = false
+local AUTO_RELOAD = false
+local KA_Enabled = false
+local KA_Range = 0
 
-– AIM SETTINGS local SMOOTH_SPEED = 14 local MAX_DIST = 250 local
-AIM_CONE = math.rad(60) local TARGET_PART = “Head”
+-- AIM SETTINGS
+local SMOOTH_SPEED = 14
+local MAX_DIST = 250
+local AIM_CONE = math.rad(60)
+local TARGET_PART = "Head"
 
-– FOV CIRCLE local fovCircle = Drawing.new(“Circle”) fovCircle.Color =
-Color3.fromRGB(255,40,40) fovCircle.Radius = 120 fovCircle.Filled =
-false fovCircle.Thickness = 2 fovCircle.Visible = false
+-- FOV CIRCLE
+local fovCircle = Drawing.new("Circle")
+fovCircle.Color = Color3.fromRGB(255,40,40)
+fovCircle.Radius = 120
+fovCircle.Filled = false
+fovCircle.Thickness = 2
+fovCircle.Visible = false
 
-–========================================================–
-–==================== REOPEN BUTTON ======================–
-–========================================================–
+--========================================================--
+--==================== REOPEN BUTTON ======================--
+--========================================================--
 
-local reopenButton = Instance.new(“TextButton”) reopenButton.Size =
-UDim2.new(0,140,0,40) reopenButton.Position = UDim2.new(0.02,0,0.3,0)
+local reopenButton = Instance.new("TextButton")
+reopenButton.Size = UDim2.new(0,140,0,40)
+reopenButton.Position = UDim2.new(0.02,0,0.3,0)
 reopenButton.BackgroundColor3 = Color3.fromRGB(255,40,40)
-reopenButton.TextColor3 = Color3.new(1,1,1) reopenButton.Font =
-Enum.Font.GothamBold reopenButton.TextSize = 16 reopenButton.Visible =
-false reopenButton.Text = “OPEN MAJINHUB” reopenButton.Parent =
-player.PlayerGui:WaitForChild(“ScreenGui”, 1) or
-Instance.new(“ScreenGui”, player.PlayerGui)
+reopenButton.TextColor3 = Color3.new(1,1,1)
+reopenButton.Font = Enum.Font.GothamBold
+reopenButton.TextSize = 16
+reopenButton.Visible = false
+reopenButton.Text = "OPEN MAJINHUB"
+reopenButton.Parent = player.PlayerGui:WaitForChild("ScreenGui", 1) or Instance.new("ScreenGui", player.PlayerGui)
 
-reopenButton.MouseButton1Click:Connect(function() Window:Toggle(true)
-reopenButton.Visible = false end)
+reopenButton.MouseButton1Click:Connect(function()
+Window:Toggle(true)
+reopenButton.Visible = false
+end)
 
-Window:Section(“Click the X Button to hide the UI. A small button will
-appear on screen to reopen MAJINHUB.”)
+Window:Section("Click the X Button to hide the UI.\nA small button will appear on screen to reopen MAJINHUB.")
 
-Window:OnClose(function() reopenButton.Visible = true end)
+Window:OnClose(function()
+reopenButton.Visible = true
+end)
 
-– The rest of the script continues…
+--========================================================--
+--======================== TABS ===========================--
+--========================================================--
+
+local AimbotTab = Window:CreateTab("Aimbot", 4483362458)
+local ESPTab = Window:CreateTab("ESP", 4483362458)
+local VisualTab = Window:CreateTab("Visuals", 4483362458)
+local SettingsTab = Window:CreateTab("Settings", 4483362458)
+local FunctionsTab = Window:CreateTab("Functions", 4483362458)
+local MovementTab = Window:CreateTab("Movement", 4483362458)
+local CombatTab = Window:CreateTab("Combat", 4483362458)
+local WeaponTab = Window:CreateTab("Weapon Mods", 4483362458)
+
+--========================================================--
+--====================== AIMBOT TAB =======================--
+--========================================================--
+
+AimbotTab:CreateToggle({
+Name = "Enable Aimbot",
+CurrentValue = false,
+Callback = function(v)
+AIM_ENABLED = v
+end
+})
+
+AimbotTab:CreateToggle({
+Name = "Silent Aim",
+CurrentValue = false,
+Callback = function(v)
+SILENT_AIM = v
+end
+})
+
+AimbotTab:CreateToggle({
+Name = "Triggerbot",
+CurrentValue = false,
+Callback = function(v)
+TRIGGERBOT = v
+end
+})
+
+AimbotTab:CreateSlider({
+Name = "Smoothness",
+Range = {1, 50},
+Increment = 1,
+CurrentValue = 14,
+Callback = function(v)
+SMOOTH_SPEED = v
+end
+})
+
+AimbotTab:CreateSlider({
+Name = "Max Distance",
+Range = {50, 600},
+Increment = 10,
+CurrentValue = 250,
+Callback = function(v)
+MAX_DIST = v
+end
+})
+
+AimbotTab:CreateLabel("Aimbot uses Right Click hold")
+
+--========================================================--
+--======================== ESP TAB ========================--
+--========================================================--
+
+ESPTab:CreateToggle({
+Name = "Enable ESP",
+CurrentValue = true,
+Callback = function(v)
+ESP_ENABLED = v
+end
+})
+
+--========================================================--
+--====================== VISUALS TAB =======================--
+--========================================================--
+
+VisualTab:CreateToggle({
+Name = "Enable FOV Circle",
+CurrentValue = false,
+Callback = function(v)
+FOV_ENABLED = v
+fovCircle.Visible = v
+end
+})
+
+VisualTab:CreateSlider({
+Name = "FOV Radius",
+Range = {40, 300},
+Increment = 5,
+CurrentValue = 120,
+Callback = function(v)
+fovCircle.Radius = v
+end
+})
+
+VisualTab:CreateColorPicker({
+Name = "FOV Color",
+Color = Color3.fromRGB(255,40,40),
+Callback = function(c)
+fovCircle.Color = c
+end
+})
+
+--========================================================--
+--==================== SETTINGS TAB =======================--
+--========================================================--
+
+SettingsTab:CreateButton({
+Name = "Unload MAJINHUB",
+Callback = function()
+Rayfield:Destroy()
+end
+})
+
+--========================================================--
+--======================= FUNCTIONS TAB ===================
+--========================================================--
+
+-- NO SPREAD
+FunctionsTab:CreateToggle({
+Name = "No Spread",
+CurrentValue = false,
+Callback = function(v)
+NO_SPREAD = v
+end
+})
+
+-- NO RECOIL
+FunctionsTab:CreateToggle({
+Name = "No Recoil",
+CurrentValue = false,
+Callback = function(v)
+NO_RECOIL = v
+end
+})
+
+-- INFINITE AMMO
+FunctionsTab:CreateToggle({
+Name = "Infinite Ammo",
+CurrentValue = false,
+Callback = function(v)
+INFINITE_AMMO = v
+end
+})
+
+-- RAPID FIRE
+FunctionsTab:CreateToggle({
+Name = "Rapid Fire",
+CurrentValue = false,
+Callback = function(v)
+RAPID_FIRE = v
+end
+})
+
+-- TELEPORT TO CLOSEST ENEMY
+FunctionsTab:CreateButton({
+Name = "Teleport to Closest Enemy",
+Callback = function()
+local closest = getClosestVisibleEnemy()
+if closest and closest.Parent then
+player.Character.HumanoidRootPart.CFrame = closest.CFrame
+end
+end
+})
+
+-- HITBOX EXPANDER (HEAD ONLY)
+FunctionsTab:CreateToggle({
+Name = "Hitbox Expander (Head Only)",
+CurrentValue = false,
+Callback = function(v)
+HITBOX = v
+for _,plr in ipairs(Players:GetPlayers()) do
+if plr ~= player and plr.Character and plr.Character:FindFirstChild("Head") then
+plr.Character.Head.Size = v and Vector3.new(6,6,6) or Vector3.new(2,1,1)
+plr.Character.Head.CanCollide = false
+end
+end
+end
+})
+--========================================================--
+--======================= MOVEMENT TAB =====================--
+--========================================================--
+
+-- FLY (MODE A: BodyGyro + BodyVelocity)
+local flying = false
+local bv, bg
+
+MovementTab:CreateToggle({
+Name = "Fly (Mode A)",
+CurrentValue = false,
+Callback = function(v)
+flying = v
+local root = player.Character:WaitForChild("HumanoidRootPart")
+
+if v then
+bv = Instance.new("BodyVelocity", root)
+bv.MaxForce = Vector3.new(1e5,1e5,1e5)
+bv.Velocity = Vector3.zero
+
+bg = Instance.new("BodyGyro", root)
+bg.MaxTorque = Vector3.new(1e5,1e5,1e5)
+else
+if bv then bv:Destroy() end
+if bg then bg:Destroy() end
+end
+end
+})
+
+RunService.RenderStepped:Connect(function()
+if flying and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+local root = player.Character.HumanoidRootPart
+bv.Velocity = camera.CFrame.LookVector * 50
+bg.CFrame = camera.CFrame
+end
+end)
+
+-- NOCLIP
+local noclip = false
+MovementTab:CreateToggle({
+Name = "Noclip",
+CurrentValue = false,
+Callback = function(v)
+noclip = v
+end
+})
+
+RunService.Stepped:Connect(function()
+if noclip and player.Character then
+for _, part in ipairs(player.Character:GetDescendants()) do
+if part:IsA("BasePart") then part.CanCollide = false end
+end
+end
+end)
+
+--========================================================--
+--======================== COMBAT TAB =====================--
+--========================================================--
+
+-- AUTO HEAL
+CombatTab:CreateToggle({
+Name = "Auto Heal",
+CurrentValue = false,
+Callback = function(v)
+AUTO_HEAL = v
+end
+})
+
+-- AUTO RELOAD
+CombatTab:CreateToggle({
+Name = "Auto Reload",
+CurrentValue = false,
+Callback = function(v)
+AUTO_RELOAD = v
+end
+})
+
+-- KILL AURA (Instant Damage)
+local KA_Range = 0
+local KA_Enabled = false
+
+local function runKillAura()
+if not KA_Enabled then return end
+for _,plr in ipairs(Players:GetPlayers()) do
+if plr ~= player and plr.Team ~= player.Team and plr.Character then
+local hum = plr.Character:FindFirstChild("Humanoid")
+local root = plr.Character:FindFirstChild("HumanoidRootPart")
+if hum and root then
+local dist = (root.Position - player.Character.HumanoidRootPart.Position).Magnitude
+if dist <= KA_Range then
+hum.Health = hum.Health - 5
+end
+end
+end
+end
+end
+
+RunService.Heartbeat:Connect(runKillAura)
+
+CombatTab:CreateToggle({
+Name = "Enable Kill Aura",
+CurrentValue = false,
+Callback = function(v)
+KA_Enabled = v
+end
+})
+
+CombatTab:CreateButton({
+Name = "Kill Aura Range A (10)",
+Callback = function()
+KA_Range = 10
+end
+})
+
+CombatTab:CreateButton({
+Name = "Kill Aura Range B (20)",
+Callback = function()
+KA_Range = 20
+end
+})
+
+CombatTab:CreateButton({
+Name = "Kill Aura Range C (30)",
+Callback = function()
+KA_Range = 30
+end
+})
+
+CombatTab:CreateButton({
+Name = "Kill Aura Range D (50)",
+Callback = function()
+KA_Range = 50
+end
+})
+
+--========================================================--
+--==================== WEAPON MODS TAB =====================--
+--========================================================--
+
+WeaponTab:CreateSlider({
+Name = "Fire Rate",
+Range = {1,100},
+CurrentValue = 10,
+Increment = 1,
+Callback = function(v)
+FIRE_RATE = v
+end
+})
+
+WeaponTab:CreateSlider({
+Name = "Weapon Damage",
+Range = {1,100},
+CurrentValue = 10,
+Increment = 1,
+Callback = function(v)
+WEAPON_DAMAGE = v
+end
+})
+
+WeaponTab:CreateSlider({
+Name = "Weapon Recoil",
+Range = {0,10},
+CurrentValue = 0,
+Increment = 1,
+Callback = function(v)
+WEAPON_RECOIL = v
+end
+})
+
+WeaponTab:CreateSlider({
+Name = "Weapon Spread",
+Range = {0,10},
+CurrentValue = 0,
+Increment = 1,
+Callback = function(v)
+WEAPON_SPREAD = v
+end
+})
+
+--========================================================--
+--====================== AIMBOT CODE ======================--
+--========================================================--
+
+local aiming = false
+
+UserInputService.InputBegan:Connect(function(i)
+if i.UserInputType == Enum.UserInputType.MouseButton2 then
+aiming = true
+end
+end)
+
+UserInputService.InputEnded:Connect(function(i)
+if i.UserInputType == Enum.UserInputType.MouseButton2 then
+aiming = false
+end
+end)
+
+local function getEnemyTeam()
+if not player.Team then return end
+for _, t in ipairs(Teams:GetChildren()) do
+if t ~= player.Team then
+return t
+end
+end
+end
+
+local function getClosestVisibleEnemy()
+local enemyTeam = getEnemyTeam()
+if not enemyTeam then return end
+
+local best, bestAng = nil, AIM_CONE
+
+for _, plr in ipairs(Players:GetPlayers()) do
+if plr ~= player and plr.Team == enemyTeam and plr.Character then
+local head = plr.Character:FindFirstChild(TARGET_PART)
+if head then
+local diff = head.Position - camera.CFrame.Position
+local angle = math.acos(camera.CFrame.LookVector:Dot(diff.Unit))
+local dist = diff.Magnitude
+if angle < bestAng and dist < MAX_DIST then
+best = head
+bestAng = angle
+end
+end
+end
+end
+return best
+end
+
+RunService.RenderStepped:Connect(function(dt)
+fovCircle.Position = UserInputService:GetMouseLocation()
+
+if not AIM_ENABLED then return end
+if not aiming then return end
+
+local target = getClosestVisibleEnemy()
+if not target then return end
+
+local goal = (target.Position - camera.CFrame.Position).Unit
+local cur = camera.CFrame.LookVector
+local alpha = 1 - math.exp(-SMOOTH_SPEED * dt)
+
+camera.CFrame = CFrame.new(camera.CFrame.Position, camera.CFrame.Position + cur:Lerp(goal, alpha))
+end)
+
+--========================================================--
+--========================= ESP ===========================--
+--========================================================--
+
+local ui = Instance.new("ScreenGui")
+ui.Parent = player.PlayerGui
+
+local espObjects = {}
+
+local function createESPBox(plr)
+local box = Instance.new("Frame")
+box.Name = plr.Name .. "_ESP"
+box.AnchorPoint = Vector2.new(0.5, 0.5)
+box.Size = UDim2.new(0,120,0,160)
+box.BackgroundTransparency = 1
+box.Visible = false
+box.Parent = ui
+
+local stroke = Instance.new("UIStroke")
+stroke.Thickness = 2
+stroke.Color = Color3.fromRGB(255,40,40)
+stroke.Parent = box
+
+local nameLabel = Instance.new("TextLabel")
+nameLabel.Size = UDim2.new(1,0,0,18)
+nameLabel.Position = UDim2.new(0,0,0,-18)
+nameLabel.TextScaled = true
+nameLabel.Text = plr.Name
+nameLabel.Font = Enum.Font.GothamBold
+nameLabel.BackgroundTransparency = 1
+nameLabel.TextColor3 = Color3.new(1,1,1)
+nameLabel.Parent = box
+
+return box
+end
+
+local function updateESP()
+if not ESP_ENABLED then
+for _, obj in pairs(espObjects) do obj.Visible = false end
+return
+end
+
+for _, plr in ipairs(Players:GetPlayers()) do
+if plr ~= player and plr.Team ~= player.Team and plr.Character then
+
+if not espObjects[plr] then
+espObjects[plr] = createESPBox(plr)
+end
+
+local box = espObjects[plr]
+local head = plr.Character:FindFirstChild("Head")
+
+if head then
+local pos, onscreen = camera:WorldToViewportPoint(head.Position)
+if onscreen then
+box.Visible = true
+box.Position = UDim2.new(0,pos.X,0,pos.Y)
+else
+box.Visible = false
+end
+end
+end
+end
+end
+
+RunService.RenderStepped:Connect(updateESP)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
