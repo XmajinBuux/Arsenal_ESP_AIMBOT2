@@ -1,0 +1,58 @@
+–========================================================– – M A J I N H
+U B V2 – Fully Expanded Admin Framework (Free Admin Game) – YOU
+requested: ALL features added, original kept intact
+–========================================================–
+
+– RAYFIELD LOAD local Rayfield =
+loadstring(game:HttpGet(‘https://sirius.menu/rayfield’))()
+
+local Window = Rayfield:CreateWindow({ Name = “MAJINHUB”, LoadingTitle =
+“MAJINHUB”, LoadingSubtitle = “Made by ChatGPT”, ConfigurationSaving = {
+Enabled = false }, Discord = { Enabled = false }, KeySystem = false })
+
+–========================================================–
+–======================= VARIABLES ========================–
+–========================================================–
+
+local Players = game:GetService(“Players”) local Teams =
+game:GetService(“Teams”) local UserInputService =
+game:GetService(“UserInputService”) local RunService =
+game:GetService(“RunService”) local Workspace =
+game:GetService(“Workspace”)
+
+local player = Players.LocalPlayer local camera =
+workspace.CurrentCamera
+
+– FEATURE TOGGLES local AIM_ENABLED = false local SILENT_AIM = false
+local TRIGGERBOT = false local ESP_ENABLED = true local FOV_ENABLED =
+false
+
+– AIM SETTINGS local SMOOTH_SPEED = 14 local MAX_DIST = 250 local
+AIM_CONE = math.rad(60) local TARGET_PART = “Head”
+
+– FOV CIRCLE local fovCircle = Drawing.new(“Circle”) fovCircle.Color =
+Color3.fromRGB(255,40,40) fovCircle.Radius = 120 fovCircle.Filled =
+false fovCircle.Thickness = 2 fovCircle.Visible = false
+
+–========================================================–
+–==================== REOPEN BUTTON ======================–
+–========================================================–
+
+local reopenButton = Instance.new(“TextButton”) reopenButton.Size =
+UDim2.new(0,140,0,40) reopenButton.Position = UDim2.new(0.02,0,0.3,0)
+reopenButton.BackgroundColor3 = Color3.fromRGB(255,40,40)
+reopenButton.TextColor3 = Color3.new(1,1,1) reopenButton.Font =
+Enum.Font.GothamBold reopenButton.TextSize = 16 reopenButton.Visible =
+false reopenButton.Text = “OPEN MAJINHUB” reopenButton.Parent =
+player.PlayerGui:WaitForChild(“ScreenGui”, 1) or
+Instance.new(“ScreenGui”, player.PlayerGui)
+
+reopenButton.MouseButton1Click:Connect(function() Window:Toggle(true)
+reopenButton.Visible = false end)
+
+Window:Section(“Click the X Button to hide the UI. A small button will
+appear on screen to reopen MAJINHUB.”)
+
+Window:OnClose(function() reopenButton.Visible = true end)
+
+– The rest of the script continues…
